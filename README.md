@@ -8,6 +8,10 @@ This script makes no attempt to intelligently reverse such double encoding. Rath
 
 Any byte sequence which is a known target of a mapping is allowed to remain in the output file.
 
+## Required gems
+
+ * gem install colorize
+
 ## Usage
 
 Imagine you have a file with corrupted encodings called `badchars.csv`. Invoke the script like this:
