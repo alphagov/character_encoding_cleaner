@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby -w
-require 'pp'
-require 'set'
 require 'colorize'
-require 'forwardable'
 
 unless ARGV.size >= 1
   puts "Usage: __FILE__ <input file> [<output file>]"
