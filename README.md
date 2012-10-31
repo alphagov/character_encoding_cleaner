@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This script is for fixing illegal encodings in text files. It's designed to clean up 'corrupt' character sequences in UTF-8 files. The most common cause of such corruption is opening a UTF-8 encoded file as though it were ISO-8859-1, and then saving it as UTF-8. This 'double-encodes' the UTF-8 byte sequences.
+This script is for fixing illegal encodings in text files. It's designed to clean up corrupt character sequences in UTF-8 files. The most common cause of such corruption is opening a UTF-8 encoded file as though it were ISO-8859-1, and then saving it as UTF-8. This double-encodes the UTF-8 byte sequences.
 
 This script makes no attempt to intelligently reverse such double encoding. Rather it detects and displays sequences of non-ascii characters (0x80-0xFF) in context, and allows the user to enter mappings for each of these in a mappings file.
 
-Any byte sequence which is a known 'target' of a mapping is allowed to remain in the output file.
+Any byte sequence which is a known target of a mapping is allowed to remain in the output file.
 
 ## Usage
 
