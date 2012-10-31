@@ -10,14 +10,14 @@ Any byte sequence which is a known 'target' of a mapping is allowed to remain in
 
 ## Usage
 
-Imagine you have a file with corrupted encodings called 'badchars.csv'. Invoke the script like this:
+Imagine you have a file with corrupted encodings called `badchars.csv`. Invoke the script like this:
 
 ```
 $ ./clean_encoding.rb badchars.csv fixed.csv
 ```
 
-This tells the script to read badchars.csv, apply any known mappings and output the result to fixed.csv.
+This tells the script to read `badchars.csv`, apply any known mappings and output the result to fixed.csv.
 
-If an unknown sequence of non-ascii characters is detected, it will be displayed, highlighted in red, with a bit of context. The mappings.txt file will be updated with the new mapping and 'TODO'.
+If an unknown sequence of non-ascii characters is detected, it will be displayed, highlighted in red, with a bit of context. The `mappings.txt` file will be updated with the new mapping and 'TODO'.
 
-You should then edit the mappings.txt file to add the appropriate mapping. The mappings.txt file should be UTF-8 encoded, so that the replacements can be displayed and edited correctly.
+You should then edit the `mappings.txt` file to add the appropriate mapping. The `mappings.txt` file should be UTF-8 encoded, so that the replacements can be displayed and edited correctly.
