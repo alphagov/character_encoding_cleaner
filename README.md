@@ -16,8 +16,18 @@ Imagine you have a file with corrupted encodings called `badchars.csv`. Invoke t
 $ ./clean_encoding.rb badchars.csv fixed.csv
 ```
 
-This tells the script to read `badchars.csv`, apply any known mappings and output the result to fixed.csv.
+This tells the script to read `badchars.csv`, apply any known mappings (read from `mappings.txt`) and output the result to `fixed.csv`.
 
 If an unknown sequence of non-ascii characters is detected, it will be displayed, highlighted in red, with a bit of context. The `mappings.txt` file will be updated with the new mapping and 'TODO'.
 
-You should then edit the `mappings.txt` file to add the appropriate mapping. The `mappings.txt` file should be UTF-8 encoded, so that the replacements can be displayed and edited correctly.
+```
+\xC3\x83\xC6\x92\xC3\x82\xE2\x80\x9A\xC3\x83\xE2\x80\x9A\xC3\x82\xC2\xA3:TODO
+```
+
+simply edit the file to indicate the desired replacement:
+
+```
+\xC3\x83\xC6\x92\xC3\x82\xE2\x80\x9A\xC3\x83\xE2\x80\x9A\xC3\x82\xC2\xA3:£
+```
+
+The `mappings.txt` file should be UTF-8 encoded, so that the replacements can be displayed and edited correctly.
