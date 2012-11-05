@@ -42,13 +42,17 @@ class FilePartitioner
       value
     end
 
-    def in_context(context_size = 30)
+    def in_context(context_size = 100)
       context_start = [from - context_size, 0].max
       context_end = [to + context_size, data.size].min
 
       pre_context = data[context_start...from]
       post_context = data[to+1...context_end]
       sanitize(pre_context) + to_s.inspect.white.on_red + sanitize(post_context)
+    end
+
+    def line_number
+      data[0..from].scan("\n").count + 1
     end
 
     def sanitize(str)
@@ -198,7 +202,7 @@ parts.each_slice(2) do |good, bad|
   next if mappings.done?(bad)
   number_remaining += 1
   mapping_number = mappings.add(bad)
-  puts "#{mapping_number}: #{bad.in_context}"
+  puts "#{bad.line_number}: ##{mapping_number} #{bad.in_context}"
 end
 
 if number_remaining == 0
