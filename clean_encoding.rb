@@ -188,6 +188,10 @@ class Mappings
   end
 end
 
+def with_bom(data)
+  bom = "\xEF\xBB\xBF"
+  data[0..2] == bom ? data : bom + data
+end
 
 mappings = Mappings.new
 data = mappings.fix(data)
@@ -212,7 +216,7 @@ end
 puts "\n"
 if output_file
   File.open(output_file, 'w:binary') do |f|
-    f.write(data)
+    f.write(with_bom(data))
   end
   puts "Wrote cleaned file to #{output_file}."
 else
