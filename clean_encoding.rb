@@ -8,7 +8,6 @@ end
 
 input_file = ARGV[0]
 output_file = ARGV[1]
-data = File.open(input_file, 'r:binary').read
 
 class FilePartitioner
   def initialize(regexp)
@@ -193,6 +192,12 @@ def with_bom(data)
   data[0..2] == bom ? data : bom + data
 end
 
+def without_bom(data)
+  bom = "\xEF\xBB\xBF"
+  data[0..2] == bom ? data[3..-1] : data
+end
+
+data = without_bom(File.open(input_file, 'r:binary').read)
 mappings = Mappings.new
 data = mappings.fix(data)
 
