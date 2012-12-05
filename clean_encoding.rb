@@ -37,6 +37,10 @@ class FilePartitioner
       data[from..to]
     end
 
+    def is_valid_utf8?
+      value.dup.force_encoding('utf-8').valid_encoding?
+    end
+
     def to_s
       value
     end
@@ -217,6 +221,7 @@ puts "\n\nRemaining unmapped bad sequences:"
 number_remaining = 0
 parts.each_slice(2) do |good, bad|
   next unless bad
+  next if bad.is_valid_utf8?
   next if mappings.is_replacement_target?(bad.to_s)
   next if mappings.done?(bad)
   number_remaining += 1
