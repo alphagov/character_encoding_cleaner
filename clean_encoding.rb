@@ -54,6 +54,15 @@ class FilePartitioner
       data[0..from].scan("\n").count + 1
     end
 
+    def nearest_previous_url
+      i = data[0..from].rindex(%r{https?://})
+      if i
+        data[i..from].match(/http[^,]*/)[0]
+      else
+        nil
+      end
+    end
+
     def sanitize(str)
       str.tr(badchars, "")
     end
@@ -211,7 +220,7 @@ parts.each_slice(2) do |good, bad|
   next if mappings.done?(bad)
   number_remaining += 1
   mapping_number = mappings.add(bad)
-  puts "#{bad.line_number}: ##{mapping_number} #{bad.in_context}"
+  puts "#{bad.line_number}: #{bad.nearest_previous_url}: ##{mapping_number} #{bad.in_context}"
 end
 
 if number_remaining == 0
