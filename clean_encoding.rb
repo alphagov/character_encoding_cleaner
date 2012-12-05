@@ -85,6 +85,16 @@ class FilePartitioner
   end
 end
 
+def with_bom(data)
+  bom = "\xEF\xBB\xBF"
+  data[0..2] == bom ? data : bom + data
+end
+
+def without_bom(data)
+  bom = "\xEF\xBB\xBF"
+  data[0..2] == bom ? data[3..-1] : data
+end
+
 class Mappings
   attr_reader :mappings
 
@@ -98,7 +108,7 @@ class Mappings
 
   def load
     line_number = 1
-    File.open(filename, 'r:binary').read.chomp.split("\n").map do |line|
+    without_bom(File.open(filename, 'r:binary').read).chomp.split("\n").map do |line|
       bad_sequence, replacement = parse_line(line)
       @mappings << Mapping.new(line_number, bad_sequence, replacement)
       line_number += 1
@@ -115,6 +125,7 @@ class Mappings
 
   def save(file = nil)
     File.open(file || filename, 'w:binary') do |f|
+      f.write("\xEF\xBB\xBF")
       @mappings.each do |mapping|
         bytestring = '\x' + mapping.bad_sequence.each_byte.map do |byte|
           byte.to_s(16).upcase
@@ -194,16 +205,6 @@ class Mappings
   def is_replacement_target?(str)
     @mappings.any? { |mapping| mapping.replacement == str }
   end
-end
-
-def with_bom(data)
-  bom = "\xEF\xBB\xBF"
-  data[0..2] == bom ? data : bom + data
-end
-
-def without_bom(data)
-  bom = "\xEF\xBB\xBF"
-  data[0..2] == bom ? data[3..-1] : data
 end
 
 data = without_bom(File.open(input_file, 'r:binary').read)
